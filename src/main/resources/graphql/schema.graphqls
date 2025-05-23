@@ -1,0 +1,352 @@
+# Directiva para verificar que los campos no estén en blanco
+directive @NotBlank (message: String = "Field is mandatory") on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION | FIELD_DEFINITION
+
+# Tipo para el usuario
+type User {
+    id: Int
+    username: String
+    email: String
+    name: String
+    role: Role
+    authorities: [String] # Añadido para mostrar las authorities
+}
+
+# Tipo para la respuesta de autenticación
+type AuthenticationResponse {
+    jwt: String!
+    role: String!
+    doctorId: Int
+    patientId: Int
+}
+
+# Tipo para la respuesta de registro
+type RegisteredUser {
+    id: Int
+    username: String
+    email: String
+    name: String
+}
+
+# Tipo de respuesta de logout
+type LogoutResponse {
+    message: String
+}
+
+# Tipo para el doctor
+type Doctor {
+    id: Int
+    specialty: String
+    licenseNumber: String
+    phone: String
+    userId: Int
+}
+
+# Tipo para la respuesta del doctor con datos de usuario asociado
+type DoctorUserDTO {
+    idDoctor: Int
+    name: String
+    username: String
+    email: String
+    specialty: String
+    licenseNumber: String
+    phone: String
+    idUser: Int
+}
+
+# Tipo para el paciente
+type Patient {
+    id: Int
+    dateOfBirth: String
+    gender: String
+    phone: String
+    address: String
+    userId: Int
+}
+
+# Tipo para la respuesta del paciente con datos de usuario asociado
+type PatientUserDTO {
+    idPatient: Int
+    name: String
+    username: String
+    email: String
+    dateOfBirth: String
+    gender: String
+    phone: String
+    address: String
+    idUser: Int
+}
+
+# Tipo para el horario (Schedule)
+type Schedule {
+    id: Int
+    dayOfWeek: String
+    startTime: String
+    endTime: String
+    doctorId: Int
+}
+# Tipo para la cita (Appointment)
+type Appointment {
+    id: Int
+    date: String
+    time: String
+    status: String
+    reason: String
+    patientId: Int
+    doctorId: Int
+}
+
+# Tipo para la historia clinica
+type MedicalRecord {
+    id: Int
+    allergies: String
+    chronicConditions: String
+    medications: String
+    bloodType: String
+    familyHistory: String
+    height: Float
+    weight: Float
+    vaccinationHistory: String
+    patientId: Int
+}
+
+# Tipo para la nota médica
+type MedicalNote {
+    id: Int
+    noteType: String
+    details: String
+    date: String
+    medicalRecordId: Int
+}
+
+# Tipo para la consulta médica (Consult)
+type Consult {
+    id: Int
+    date: String
+    diagnosis: String
+    treatment: String
+    observations: String
+    currentWeight: Float
+    currentHeight: Float
+    medicalRecordId: Int
+    appointmentId: Int
+    attentionTime: String
+}
+
+type DoctorWithScheduleDTO {
+    idDoctor: Int
+    name: String
+    username: String
+    email: String
+    specialty: String
+    licenseNumber: String
+    phone: String
+    idUser: Int
+    schedules: [Schedule]
+}
+
+# Tipo para la preevaluación
+type PreEvaluation {
+    id: Int
+    appointmentId: Int
+    symptoms: String
+    potentialDiagnosis: String
+}
+
+type MedicalRecordDetailsDTO {
+    id: Int
+    allergies: String
+    chronicConditions: String
+    medications: String
+    bloodType: String
+    familyHistory: String
+    height: Float
+    weight: Float
+    vaccinationHistory: String
+    patientId: Int
+    medicalNotes: [MedicalNote]
+    consults: [Consult]
+}
+
+# Entrada para la solicitud de autenticación
+input AuthenticationRequestInput {
+    identifier: String @NotBlank
+    password: String @NotBlank
+}
+
+# Entrada para el registro de un nuevo usuario
+input SaveUserInput {
+    username: String
+    email: String
+    password: String
+    repeatedPassword: String
+    name: String
+}
+
+# Entrada para el registro de un nuevo doctor
+input SaveDoctorInput {
+    specialty: String
+    licenseNumber: String
+    phone: String
+}
+
+# Entrada para el registro de un nuevo paciente
+input SavePatientInput {
+    dateOfBirth: String
+    gender: String
+    phone: String
+    address: String
+}
+
+# Entrada para el registro y actualización de un horario
+input SaveScheduleInput {
+    dayOfWeek: String
+    startTime: String
+    endTime: String
+    doctorId: Int
+}
+
+# Entrada para el registro y actualización de una cita
+input SaveAppointmentInput {
+    date: String
+    time: String
+    reason: String
+    patientId: Int
+    doctorId: Int
+}
+
+# Entrada para el registro y actualización de un registro médico
+input SaveMedicalRecordInput {
+    allergies: String
+    chronicConditions: String
+    medications: String
+    bloodType: String
+    familyHistory: String
+    height: Float
+    weight: Float
+    vaccinationHistory: String
+    patientId: Int
+}
+
+# Entrada para el registro y actualización de una nota médica
+input SaveMedicalNoteInput {
+    noteType: String
+    details: String
+    date: String
+    medicalRecordId: Int
+}
+
+# Entrada para el registro y actualización de una consulta médica
+input SaveConsultInput {
+    diagnosis: String
+    treatment: String
+    observations: String
+    currentWeight: Float
+    currentHeight: Float
+    appointmentId: Int
+    attentionTime: String
+}
+
+# Entrada para el registro de una preevaluación
+input SavePreEvaluationInput {
+    appointmentId: Int!
+    symptoms: String!
+    potentialDiagnosis: String!
+}
+
+# Enum para los roles de usuario
+enum Role {
+    ADMINISTRATOR
+    DOCTOR
+    RECEPTIONIST
+    PATIENT
+}
+
+# Consultas (Queries)
+type Query {
+    # Users
+    validateToken: Boolean
+    findMyProfile: User
+    findAllUsers: [User]
+    # Doctors
+    getAllDoctors: [DoctorUserDTO]
+    getDoctorWithUserById(doctorId: Int!): DoctorUserDTO
+    getAllDoctorsWithSchedules: [DoctorWithScheduleDTO]
+    # Patients
+    getAllPatients: [PatientUserDTO]
+    getPatientWithUserById(patientId: Int!): PatientUserDTO
+    # Schedules
+    getAllSchedules: [Schedule]
+    getSchedulesByDoctor(doctorId: Int!): [Schedule]
+    getScheduleById(scheduleId: Int!): Schedule
+    # Appointments
+    getAllAppointments: [Appointment]
+    getAppointmentsByPatient(patientId: Int!): [Appointment]
+    getAppointmentsByDoctor(doctorId: Int!): [Appointment]
+    getAppointmentById(appointmentId: Int!): Appointment
+    # Medical Records
+    getAllMedicalRecords: [MedicalRecord]
+    getMedicalRecordById(medicalRecordId: Int!): MedicalRecord
+    getMedicalRecordByPatient(patientId: Int!): MedicalRecord
+    getMedicalRecordDetails(medicalRecordId: Int!): MedicalRecordDetailsDTO
+    # Medical Notes
+    getAllMedicalNotes: [MedicalNote]
+    getMedicalNoteById(medicalNoteId: Int!): MedicalNote
+    getMedicalNotesByMedicalRecord(medicalRecordId: Int!): [MedicalNote]
+    # Consults
+    getAllConsults: [Consult]
+    findConsultsByDoctor(doctorId: Int!): [Consult]
+    findConsultsByPatient(patientId: Int!): [Consult]
+    findConsultsByAppointment(appointmentId: Int!): Consult
+    # PreEvaluations
+    findPreEvaluationById(preEvaluationId: Int!): PreEvaluation
+    findPreEvaluationByAppointment(appointmentId: Int!): PreEvaluation
+    getAllPreEvaluations: [PreEvaluation]
+}
+
+# Mutaciones (Mutations)
+type Mutation {
+    # Users
+    authenticate(input: AuthenticationRequestInput!): AuthenticationResponse
+    registerUser(input: SaveUserInput!): RegisteredUser
+    logout: LogoutResponse
+
+    # Doctors
+    registerDoctor(doctorInput: SaveDoctorInput!, userInput: SaveUserInput!): Doctor
+    updateDoctor(doctorId: Int!, doctorInput: SaveDoctorInput!, userInput: SaveUserInput!): Doctor
+    deleteDoctor(doctorId: Int!): Boolean
+
+    # Patients
+    registerPatient(patientInput: SavePatientInput!, userInput: SaveUserInput!): Patient
+    updatePatient(patientId: Int!, patientInput: SavePatientInput !, userInput: SaveUserInput!): Patient
+    deletePatient(patientId: Int!): Boolean
+
+    # Schedules
+    registerSchedule(scheduleInput: SaveScheduleInput!): Schedule
+    updateSchedule(scheduleId: Int!, scheduleInput: SaveScheduleInput!): Schedule
+    deleteSchedule(scheduleId: Int!): Boolean
+
+    # Appointments
+    registerAppointment(appointmentInput: SaveAppointmentInput!): Appointment
+    updateAppointment(appointmentId: Int!, appointmentInput: SaveAppointmentInput!): Appointment
+    deleteAppointment(appointmentId: Int!): Boolean
+    updateAppointmentStatus(appointmentId: Int!, status: String!): Appointment
+
+    # Medical Records
+    registerMedicalRecord(medicalRecordInput: SaveMedicalRecordInput!): MedicalRecord
+    updateMedicalRecord(medicalRecordId: Int!, medicalRecordInput: SaveMedicalRecordInput!): MedicalRecord
+    deleteMedicalRecord(medicalRecordId: Int!): Boolean
+
+    # Medical Notes
+    registerMedicalNote(medicalNoteInput: SaveMedicalNoteInput!): MedicalNote
+    updateMedicalNote(medicalNoteId: Int!, medicalNoteInput: SaveMedicalNoteInput!): MedicalNote
+    deleteMedicalNote(medicalNoteId: Int!): Boolean
+
+    # Consults
+    registerConsult(consultInput: SaveConsultInput!): Consult
+    updateConsult(consultId: Int!, consultInput: SaveConsultInput!): Consult
+    deleteConsult(consultId: Int!): Boolean
+
+    # PreEvaluations
+    registerPreEvaluation(preEvaluationInput: SavePreEvaluationInput!): PreEvaluation
+
+}

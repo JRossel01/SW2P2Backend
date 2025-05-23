@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "specialty": "Cardiology",
+    "licenseNumber": "D123456",
+    "phone": "1112223333",
+    "userId": 3
+  },
+  {
+    "id": 2,
+    "specialty": "Neurology",
+    "licenseNumber": "D234567",
+    "phone": "2223334444",
+    "userId": 4
+  },
+  {
+    "id": 3,
+    "specialty": "Pediatrics",
+    "licenseNumber": "D345678",
+    "phone": "3334445555",
+    "userId": 5
+  },
+  {
+    "id": 4,
+    "specialty": "Orthopedics",
+    "licenseNumber": "D456789",
+    "phone": "4445556666",
+    "userId": 6
+  },
+  {
+    "id": 5,
+    "specialty": "Dermatology",
+    "licenseNumber": "D567890",
+    "phone": "5556667777",
+    "userId": 7
+  }
+]

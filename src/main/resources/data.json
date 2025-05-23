@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "username": "admin_user",
+    "name": "Admin User",
+    "email": "admin@gmail.com",
+    "password": "$2a$12$QxiXNXzak4mhHTUEECUHzuXmR5Fp/saU3qLT5CYWL.60Yc0aOaRme",
+    "role": "ADMINISTRATOR"
+  },
+  {
+    "id": 2,
+    "username": "receptionist_user",
+    "name": "Receptionist User",
+    "email": "receptionist@gmail.com",
+    "password": "$2a$12$QxiXNXzak4mhHTUEECUHzuXmR5Fp/saU3qLT5CYWL.60Yc0aOaRme",
+    "role": "RECEPTIONIST"
+  },
+  {
+    "id": 3,
+    "username": "doctor_user_1",
+    "name": "Doctor User One",
+    "email": "doctor1@gmail.com",
+    "password": "$2a$12$QxiXNXzak4mhHTUEECUHzuXmR5Fp/saU3qLT5CYWL.60Yc0aOaRme",
+    "role": "DOCTOR"
+  },
+  {
+    "id": 4,
+    "username": "doctor_user_2",
+    "name": "Doctor User Two",
+    "email": "doctor2@gmail.com",
+    "password": "$2a$12$QxiXNXzak4mhHTUEECUHzuXmR5Fp/saU3qLT5CYWL.60Yc0aOaRme",
+    "role": "DOCTOR"
+  },
+  {
+    "id": 5,
+    "username": "doctor_user_3",
+    "name": "Doctor User Three",
+    "email": "doctor3@gmail.com",
+    "password": "$2a$12$QxiXNXzak4mhHTUEECUHzuXmR5Fp/saU3qLT5CYWL.60Yc0aOaRme",
+    "role": "DOCTOR"
+  },
+  {
+    "id": 6,
+    "username": "doctor_user_4",
+    "name": "Doctor User Four",
+    "email": "doctor4@gmail.com",
+    "password": "$2a$12$QxiXNXzak4mhHTUEECUHzuXmR5Fp/saU3qLT5CYWL.60Yc0aOaRme",
+    "role": "DOCTOR"
+  },
+  {
+    "id": 7,
+    "username": "doctor_user_5",
+    "name": "Doctor User Five",
+    "email": "doctor5@gmail.com",
+    "password": "$2a$12$QxiXNXzak4mhHTUEECUHzuXmR5Fp/saU3qLT5CYWL.60Yc0aOaRme",
+    "role": "DOCTOR"
+  },
+  {
+    "id": 8,
+    "username": "patient_user_1",
+    "name": "Patient User One",
+    "email": "patient1@gmail.com",
+    "password": "$2a$12$QxiXNXzak4mhHTUEECUHzuXmR5Fp/saU3qLT5CYWL.60Yc0aOaRme",
+    "role": "PATIENT"
+  },
+  {
+    "id": 9,
+    "username": "patient_user_2",
+    "name": "Patient User Two",
+    "email": "patient2@gmail.com",
+    "password": "$2a$12$QxiXNXzak4mhHTUEECUHzuXmR5Fp/saU3qLT5CYWL.60Yc0aOaRme",
+    "role": "PATIENT"
+  },
+  {
+    "id": 10,
+    "username": "patient_user_3",
+    "name": "Patient User Three",
+    "email": "patient3@gmail.com",
+    "password": "$2a$12$QxiXNXzak4mhHTUEECUHzuXmR5Fp/saU3qLT5CYWL.60Yc0aOaRme",
+    "role": "PATIENT"
+  },
+  {
+    "id": 11,
+    "username": "patient_user_4",
+    "name": "Patient User Four",
+    "email": "patient4@gmail.com",
+    "password": "$2a$12$QxiXNXzak4mhHTUEECUHzuXmR5Fp/saU3qLT5CYWL.60Yc0aOaRme",
+    "role": "PATIENT"
+  },
+  {
+    "id": 12,
+    "username": "patient_user_5",
+    "name": "Patient User Five",
+    "email": "patient5@gmail.com",
+    "password": "$2a$12$QxiXNXzak4mhHTUEECUHzuXmR5Fp/saU3qLT5CYWL.60Yc0aOaRme",
+    "role": "PATIENT"
+  }
+]
