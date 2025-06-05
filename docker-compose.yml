@@ -1,30 +1,11 @@
+version: '3.8'
 
 services:
-  app:
+  sw2p2-backend:
     build: .
-    container_name: med-backend
     ports:
       - "9191:9191"
     environment:
-      SPRING_DATA_MONGODB_URI: mongodb://mongo:27017/med_db
-    depends_on:
-      - mongo
-#    networks:
-#      - med-network
+      SPRING_DATA_MONGODB_URI: mongodb+srv://grupo01:d5QGObx1tXkW07u3@sw2p2backend.hahdn3u.mongodb.net/med_db?retryWrites=true&w=majority&appName=sw2p2backend
+    restart: unless-stopped
 
-  mongo:
-    image: mongo:latest
-    container_name: mongo
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongo-data:/data/db
-#    networks:
-#      - med-network
-
-volumes:
-  mongo-data:
-
-#networks:
-#  med-network:
-#    external: true
