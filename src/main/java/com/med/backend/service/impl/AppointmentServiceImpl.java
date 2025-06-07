@@ -7,7 +7,9 @@ import com.med.backend.persistence.entity.Appointment;
 import com.med.backend.persistence.repository.AppointmentRepository;
 import com.med.backend.persistence.repository.DoctorRepository;
 import com.med.backend.persistence.repository.PatientRepository;
+import com.med.backend.persistence.repository.UserRepository;
 import com.med.backend.service.AppointmentService;
+import com.med.backend.service.twilio.WhatsAppService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,10 +26,16 @@ public class AppointmentServiceImpl implements AppointmentService {
     private AppointmentRepository appointmentRepository;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private DoctorRepository doctorRepository;
 
     @Autowired
     private PatientRepository patientRepository;
+
+    @Autowired
+    private WhatsAppService whatsAppService;
 
     private static int lastUsedAppointmentId = 0;
 
@@ -48,8 +56,37 @@ public class AppointmentServiceImpl implements AppointmentService {
         appointment.setPatientId(newAppointment.getPatientId());
         appointment.setDoctorId(newAppointment.getDoctorId());
 
-        return appointmentRepository.save(appointment);
+
+        Appointment savedAppointment = appointmentRepository.save(appointment);
+        sendWhatsAppConfirmation(savedAppointment);
+
+        return savedAppointment;
     }
+
+    private void sendWhatsAppConfirmation(Appointment appointment) {
+        var doctor = doctorRepository.findById(appointment.getDoctorId()).orElse(null);
+        var patient = patientRepository.findById(appointment.getPatientId()).orElse(null);
+
+        if (doctor != null && patient != null) {
+            var doctorUser = userRepository.findById(doctor.getUserId()).orElse(null);
+            String patientPhone = patient.getPhone();
+
+            if (doctorUser != null && patientPhone != null) {
+                String doctorName = doctorUser.getName();
+
+                whatsAppService.sendAppointmentConfirmation(
+                        patientPhone,
+                        doctorName,
+                        appointment.getDate(),
+                        appointment.getTime(),
+                        appointment.getReason()
+                );
+            }
+        }
+    }
+
+
+
 
 
     @Override
