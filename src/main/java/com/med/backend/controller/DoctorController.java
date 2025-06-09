@@ -50,7 +50,7 @@ public class DoctorController {
         return doctorService.getDoctorWithUserById(doctorId);
     }
 
-    @PreAuthorize("hasAnyRole('ADMINISTRATOR','RECEPTIONIST')")
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR','RECEPTIONIST','PATIENT')")
     @QueryMapping(name = "getAllDoctorsWithSchedules")
     public List<DoctorWithScheduleDTO> getAllDoctorsWithSchedules() {
         return doctorService.getAllDoctorsWithSchedules();

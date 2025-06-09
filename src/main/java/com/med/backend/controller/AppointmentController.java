@@ -30,7 +30,7 @@ public class AppointmentController {
     private DoctorService doctorService;
 
 
-    @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'RECEPTIONIST')")
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'RECEPTIONIST','PATIENT')")
     @MutationMapping(name = "registerAppointment")
     public Appointment registerAppointment(@Argument("appointmentInput") @Valid SaveAppointmentDTO newAppointment) {
         //  return appointmentService.registerOneAppointment(newAppointment);
@@ -64,7 +64,7 @@ public class AppointmentController {
         appointmentService.deleteAppointment(appointmentId);
     }
 
-    @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'RECEPTIONIST')")
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'RECEPTIONIST','PATIENT')")
     @QueryMapping(name = "getAllAppointments")
     public List<Appointment> getAllAppointments() {
         return appointmentService.getAllAppointments();

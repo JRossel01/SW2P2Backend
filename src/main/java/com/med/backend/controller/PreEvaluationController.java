@@ -19,7 +19,7 @@ public class PreEvaluationController {
     @Autowired
     private PreEvaluationService preEvaluationService;
 
-    @PreAuthorize("hasRole('ADMINISTRATOR')")
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR','PATIENT')")
     @MutationMapping(name = "registerPreEvaluation")
     public PreEvaluation registerPreEvaluation(@Argument("preEvaluationInput") @Valid SavePreEvaluationDTO newPreEvaluation) {
         return preEvaluationService.registerOnePreEvaluation(newPreEvaluation);
